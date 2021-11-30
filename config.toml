@@ -30,7 +30,7 @@ theme = "m10c"
 
   [[params.social]]
     name = "twitch"
-    url = "https://www.twitch.tv/phaedontv"
+    url = "https://www.twitch.tv/sinopetv"
 
   # Brown theme
   #[params.style]
