@@ -18,20 +18,20 @@ jobs:
           ref: master
 
       - name: Generate HTML files
-        run: hugo -d ../tmp/
+        run: hugo -d ../dist
+
+      - name: Add CNAME file
+        run: echo "www.samueladams.dev" >> CNAME
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ../dist
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v2
         with:
           ref: gh-pages
-
-      - name: Setup directory before push
-        run: |
-          rm -rf *
-          mv ../tmp/* .
-
-      # - name: Add CNAME file
-      #   run: echo "www.samueladams.dev" >> CNAME
 
       - name: Push to gh-pages branch
         run: |
@@ -45,4 +45,3 @@ jobs:
             git commit -m "Deployment at $(date)."
             git push origin gh-pages
           fi
-
