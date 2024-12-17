@@ -30,8 +30,8 @@ jobs:
           rm -rf *
           mv ../tmp/* .
 
-      # - name: Add CNAME file
-      #   run: echo "www.samueladams.dev" >> CNAME
+      - name: Add CNAME file
+        run: echo "www.samueladams.dev" >> CNAME
 
       - name: Push to gh-pages branch
         run: |
