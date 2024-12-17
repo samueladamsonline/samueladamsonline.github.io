@@ -18,7 +18,7 @@ jobs:
           ref: master
 
       - name: Generate HTML files
-        run: hugo -d ./dist
+        run: hugo -d ../dist
 
       - name: Add CNAME file
         run: echo "www.samueladams.dev" >> CNAME
@@ -26,7 +26,12 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./dist
+          path: ../dist
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
 
       - name: Push to gh-pages branch
         run: |
