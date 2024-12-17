@@ -1,0 +1,48 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install Hugo
+        run: |
+          sudo apt-get update
+          sudo apt-get install hugo=0.68.3-1
+
+      - name: Checkout master branch
+        uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Generate HTML files
+        run: hugo -d ../tmp/
+
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+
+      - name: Setup directory before push
+        run: |
+          rm -rf *
+          mv ../tmp/* .
+
+      - name: Add CNAME file
+        run: echo "www.samueladams.dev" >> CNAME
+
+      - name: Push to gh-pages branch
+        run: |
+          if [[ -z $(git status --porcelain) ]]
+          then
+            echo "Push not needed"
+          else
+            git config --global user.name 'Samuel Adams'
+            git config --global user.email 'samueladamsonline@gmail.com'
+            git add .
+            git commit -m "Deployment at $(date)."
+            git push origin gh-pages
+          fi
+
