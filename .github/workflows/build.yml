@@ -13,35 +13,45 @@ jobs:
           sudo apt-get install hugo=0.68.3-1
 
       - name: Checkout master branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
 
       - name: Generate HTML files
-        run: hugo -d ../dist
+        run: hugo -d public
 
       - name: Add CNAME file
-        run: echo "www.samueladams.dev" >> CNAME
+        run: echo "www.samueladams.dev" >> public/CNAME
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ../dist
+          path: public
+  deploy:
+    needs: build
+    runs-on: ubuntu-22.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
 
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v2
-        with:
-          ref: gh-pages
+      # - name: Checkout gh-pages branch
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: gh-pages
 
-      - name: Push to gh-pages branch
-        run: |
-          if [[ -z $(git status --porcelain) ]]
-          then
-            echo "Push not needed"
-          else
-            git config --global user.name 'Samuel Adams'
-            git config --global user.email 'samueladamsonline@gmail.com'
-            git add .
-            git commit -m "Deployment at $(date)."
-            git push origin gh-pages
-          fi
+      # - name: Push to gh-pages branch
+      #   run: |
+      #     if [[ -z $(git status --porcelain) ]]
+      #     then
+      #       echo "Push not needed"
+      #     else
+      #       git config --global user.name 'Samuel Adams'
+      #       git config --global user.email 'samueladamsonline@gmail.com'
+      #       git add .
+      #       git commit -m "Deployment at $(date)."
+      #       git push origin gh-pages
+      #     fi
