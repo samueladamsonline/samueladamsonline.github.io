@@ -7,6 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
       - name: Install Hugo
         run: |
           sudo apt-get update
@@ -24,7 +28,7 @@ jobs:
         run: echo "www.samueladams.dev" >> public/CNAME
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v2
         with:
           path: public
   deploy:
