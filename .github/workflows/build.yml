@@ -10,7 +10,7 @@ jobs:
       - name: Install Hugo
         run: |
           sudo apt-get update
-          sudo apt-get install hugo=0.68.3-1
+          sudo apt-get install hugo=0.128.0
       - name: Checkout master branch
         uses: actions/checkout@v4
         with:
