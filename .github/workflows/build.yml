@@ -7,28 +7,20 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
       - name: Install Hugo
         run: |
           sudo apt-get update
           sudo apt-get install hugo=0.68.3-1
-
       - name: Checkout master branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
-
       - name: Generate HTML files
         run: hugo -d public
-
       - name: Add CNAME file
         run: echo "www.samueladams.dev" >> public/CNAME
-
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: public
   deploy:
@@ -40,7 +32,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
 
       # - name: Checkout gh-pages branch
       #   uses: actions/checkout@v2
