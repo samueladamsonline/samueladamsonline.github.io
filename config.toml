@@ -15,7 +15,7 @@ theme = "m10c"
     url = "/tags/"
 
 [params]
-  description = "A place to (hopefully) learn interesting things about software."
+  description = "A place to learn interesting things about software."
   avatar = "avatar.jpg"
   author = "Samuel Adams"
   favicon = "/favicon.ico"
